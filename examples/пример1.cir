@@ -1,0 +1,12 @@
+* Qucs 0.0.21 /home/mike/circuit_1/test1.sch
+.INCLUDE "/usr/share/qucs-s/xspice_cmlib/include/ngspice_mathfunc.inc"
+* Qucs 0.0.21  /home/mike/circuit_1/test1.sch
+R1 _net0 0  50
+C1 input _net0  1P 
+L1 input 0  1000N 
+.control
+echo "" > spice4qucs.cir.noise
+echo "" > spice4qucs.cir.pz
+exit
+.endc
+.END
