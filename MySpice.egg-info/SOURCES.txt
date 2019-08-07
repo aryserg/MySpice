@@ -1,0 +1,7 @@
+README.md
+setup.py
+MySpice/__init__.py
+MySpice.egg-info/PKG-INFO
+MySpice.egg-info/SOURCES.txt
+MySpice.egg-info/dependency_links.txt
+MySpice.egg-info/top_level.txt
