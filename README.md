@@ -22,7 +22,7 @@ sudo ldconfig
 #### Windows
 Скачиваем ngspice для windows https://sourceforge.net/projects/ngspice/files/ng-spice-rework/30/ngspice-30_dll_64.zip/download. Распаковываем, папку Spice64_dll помещаем в C:\Program Files .
 
-Устанавливаем miniconda https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe . Запускаем **Anaconda Prompt (Miniconda3)** и ставим git:
+Устанавливаем miniconda https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe . Запускаем *Anaconda Prompt (Miniconda3)* и ставим git:
 
 `conda install git`
 
