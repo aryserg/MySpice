@@ -1,1 +1,2 @@
-name = "example_pkg" 
+name = "MySpice" 
+from . import MySpice

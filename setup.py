@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="MySpice",
-    version="0.0.1",
+    version="0.0.2",
     author="Mikhail Lukyanov",
     author_email="free4telecom@gmail.com",
     description="",

@@ -26,7 +26,7 @@ class Init_Data:
     F: float
     V: float
     Rcs: float = 0.0
-    SNR: float = 100.0 # не реализовано
+    SNR: float = 40.0  
     
 
 def LoadFile(path):
@@ -37,9 +37,9 @@ def LoadFile(path):
 
 def SaveFile(analysis, path):
     with open(path, 'w') as csv_file:
-        csv_writer = csv.writer(csv_file, delimiter=';')
-        csv_writer.writerow(numpy.array(analysis.input_dummy, dtype=float))
-        csv_writer.writerow(numpy.array(analysis.VCurrent, dtype=float))
+        csv_writer = csv.writer(csv_file, delimiter = ';')
+        csv_writer.writerow(analysis.input_dummy)
+        csv_writer.writerow(analysis.VCurrent)
     return
 
     
@@ -54,5 +54,14 @@ def CreateCVC(circuit, input_data, lendata ):
     circuit.R('cs', 'input', 'input_dummy', input_data.Rcs)
     circuit.AcLine('Current', circuit.gnd, 'input_dummy', rms_voltage = rms_voltage, frequency = input_data.F)
     simulator = circuit.simulator()
-    analysis = simulator.transient(step_time=period / lendata, end_time=period)
+    analysis = simulator.transient(step_time = period / lendata, end_time = period)
+# Расчитываем шум независмо для тока и напряжения исходя из среднеквадратичных значений и одинакового SNR    
+    avg_V_db = 10 * numpy.log10(numpy.mean(numpy.array(analysis.input_dummy, dtype = float) ** 2))
+    avg_Vnoise_db = avg_V_db - input_data.SNR
+    Vnoise = numpy.random.normal(0, numpy.sqrt(10 ** (avg_Vnoise_db / 10)), len(analysis.input_dummy))
+    analysis.input_dummy = numpy.array(analysis.input_dummy, dtype = float) + Vnoise
+    avg_I_db = 10 * numpy.log10(numpy.mean(numpy.array(analysis.VCurrent, dtype = float) ** 2))
+    avg_Inoise_db = avg_I_db - input_data.SNR
+    Inoise = numpy.random.normal(0, numpy.sqrt(10 ** (avg_Inoise_db / 10)), len(analysis.input_dummy))
+    analysis.VCurrent = numpy.array(analysis.VCurrent, dtype = float) + Inoise
     return analysis
