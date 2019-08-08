@@ -43,7 +43,7 @@ def SaveFile(analysis, path):
     return
 
     
-def CreateCVC(circuit, input_data, lendata ):
+def CreateCVC(circuit, input_data, lendata , cycle = 1):
     # lendata не может принимать значения меньше 59
     #if lendata>86:
     #    lendata = lendata - 8
@@ -54,7 +54,9 @@ def CreateCVC(circuit, input_data, lendata ):
     circuit.R('cs', 'input', 'input_dummy', input_data.Rcs)
     circuit.AcLine('Current', circuit.gnd, 'input_dummy', rms_voltage = rms_voltage, frequency = input_data.F)
     simulator = circuit.simulator()
-    analysis = simulator.transient(step_time = period / lendata, end_time = period)
+    analysis = simulator.transient(step_time = period / lendata, end_time = period * cycle)
+    analysis.input_dummy = analysis.input_dummy[len(analysis.input_dummy)-lendata:len(analysis.input_dummy)]
+    analysis.VCurrent = analysis.VCurrent[len(analysis.VCurrent)-lendata:len(analysis.VCurrent)]
 # Расчитываем шум независмо для тока и напряжения исходя из среднеквадратичных значений и одинакового SNR    
     avg_V_db = 10 * numpy.log10(numpy.mean(numpy.array(analysis.input_dummy, dtype = float) ** 2))
     avg_Vnoise_db = avg_V_db - input_data.SNR
