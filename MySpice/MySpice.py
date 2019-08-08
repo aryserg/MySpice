@@ -62,6 +62,6 @@ def CreateCVC(circuit, input_data, lendata ):
     analysis.input_dummy = numpy.array(analysis.input_dummy, dtype = float) + Vnoise
     avg_I_db = 10 * numpy.log10(numpy.mean(numpy.array(analysis.VCurrent, dtype = float) ** 2))
     avg_Inoise_db = avg_I_db - input_data.SNR
-    Inoise = numpy.random.normal(0, numpy.sqrt(10 ** (avg_Inoise_db / 10)), len(analysis.input_dummy))
+    Inoise = numpy.random.normal(0, numpy.sqrt(10 ** (avg_Inoise_db / 10)), len(analysis.VCurrent))
     analysis.VCurrent = numpy.array(analysis.VCurrent, dtype = float) + Inoise
     return analysis
