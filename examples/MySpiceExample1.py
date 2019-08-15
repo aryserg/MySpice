@@ -2,7 +2,6 @@
 import matplotlib.pyplot as plt
 
 import PySpice.Logging.Logging as Logging
-from PySpice.Probe.Plot import plot
 
 from MySpice import MySpice as spice
 
@@ -15,9 +14,6 @@ spice.SaveFile(analysis, "пример1.csv")
 figure1 = plt.figure(1, (20, 10))
 plt.grid()
 plt.plot(analysis.input_dummy, analysis.VCurrent)
-#plt.title('Диод 1N4148')
 plt.xlabel('Напряжение [В]')
 plt.ylabel('Сила тока [А]')
-#plt.tight_layout()
 plt.show()
-
